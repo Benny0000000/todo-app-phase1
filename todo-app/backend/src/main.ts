@@ -1,0 +1,30 @@
+// backend/src/main.ts - COMPLETE FIX
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import * as dotenv from 'dotenv';
+
+async function bootstrap() {
+  dotenv.config();
+  
+  const app = await NestFactory.create(AppModule);
+  
+  // ALLOW ALL ORIGINS FOR DEVELOPMENT
+  app.enableCors({
+    origin: true, // Allow all origins
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin'],
+    exposedHeaders: ['Content-Length', 'Content-Type'],
+  });
+  
+  // Global prefix
+  app.setGlobalPrefix('api');
+  
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  
+  console.log(`🚀 Server running on http://localhost:${port}`);
+  console.log(`📁 API available at http://localhost:${port}/api`);
+  console.log(`✅ CORS enabled for all origins`);
+}
+bootstrap();
