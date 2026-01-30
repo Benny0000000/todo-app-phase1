@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+        content="width=device-width,
+        initial-scale=1.0">
+        <title>Simple To-Do App</title>
+        <link rel="stylesheet" href="style5.css">
+        <style>
+body{
+    background:#f0f0f0 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial,sans-serif;
+}
+
+.container{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 0 10px rgba(0,0,0, 0.1);
+}
+
+.input-row{
+    display: flex;
+    gap: 10px;
+}
+
+#inputBox{
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+#addBtn{
+    padding: 10px 15px;
+    background: #3a86ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addBtn:hover{
+    background: #1f6ff0;
+}
+
+
+#status{
+    margin-left: 10px;
+    font-style: italic;
+    color: color(#555);
+}
+
+#listContainer {
+    padding: 0;
+}
+#listContainer li {
+    list-style: none;
+    font-size: 16px;
+    left: 10px;
+    right: 10px;
+    padding: 12px 40px 12px 40px ;
+    margin-bottom: 8px;
+    background: #f4f4f4;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+#listContainer li::before{
+    content:'';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    top:13px;
+    left: 10px;
+}
+#listContainer li.checked {
+    color: #888;
+    text-decoration: line-through;
+    background: #e9ecef;
+
+}
+
+#listContainer li.checked::before{
+    content: '✓';
+    background-color: #28a745;
+    color: white;
+    border: none;
+    text-align: center;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#listContainer li span.delete {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    font-size: 18px;
+    color: #dc3545;
+    text-align: center;
+    cursor: pointer;
+
+}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>My Tasks</h1>
+            <div class="input-row">
+                <input type="text"
+                id="inputBox" placeholder="Enter a task...">
+                <button id="addBtn">Add</button>
+            </div>
+            <ul id="listContainer"></ul>
+        </div>
+        <script src="script.js">
+const inputBox =
+document.getElementById("inputBox");
+const listContainer =
+document.getElementById("listContainer");
+const addBtn =
+document.getElementById("addBtn")
+
+ function addTask() {
+    const inputValue=
+    inputBox.value.trim();
+
+    if (inputValue ==="") {
+        alert("You must write something!");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.textContent = inputValue;
+
+
+    let deleteBtn =
+    document.createElement("span");
+    deleteBtn.textContent='X';
+    deleteBtn.classList.add("delete");
+    
+    li.appendChild(deleteBtn);
+    listContainer.appendChild(li);
+
+    inputBox.value = "";
+    saveData();
+ }
+
+ function handleClick(event) {
+    const target = event.target;
+
+    if (target.tagName === "LI") {
+        target.classList.toggle("checked");
+        saveData();
+    }
+
+    else if(target.classList.contains("delete")) {
+        target.parentElement.remove();
+        saveData();
+    }
+ }
+
+ function saveData() {
+    localStorage.setItem("todo-data",listContainer.innerHTML);
+ }
+
+ function loadData() {
+    const data =
+    localStorage.getItem("todo-data");
+    if(data) {
+        listContainer.innerHTML = data;
+    }
+ }
+  addBtn.addEventListener("click", addTask);
+
+  listContainer.addEventListener("click",handleClick);
+  loadData();
+        </script>
+    </body>
+</html>

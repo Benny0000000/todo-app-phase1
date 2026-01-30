@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="SW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Trip Budget Calculator</title>
+
+    <style>
+      body {
+        font-family: Arial sans-serif;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .sprint-container {
+        border: 1px solid whitesmoke;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+      input {
+        display: block;
+        margin: 10px 0;
+        padding: 8px;
+        width: 250px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: rgb(40, 114, 40);
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: rgb(48, 138, 48);
+      }
+      #balanceDisplay {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .summary-box {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="sprint-container">
+      <h2>Set Trip Budget</h2>
+      <input type="number" id="budget" placeholder="Starting Budget" />
+      <input type="number" id="flight" placeholder="Flight Cost" />
+      <input type="number" id="hotel" placeholder="Hotel Cost" />
+      <input type="number" id="dinner" placeholder="Dinner Cost" />
+      <button onclick="calculateInitialBudget()">Calculate</button>
+    </div>
+
+    <div class="sprint-container">
+      <h2>Add New Expense</h2>
+      <input type="number" id="newExpense" placeholder="Expense Amount.." />
+      <button onclick="addNewExpense()">Add</button>
+    </div>
+
+    <h1 id="balancedisplay">Balance: 0 TZS</h1>
+
+    <hr />
+    <div class="sprint-container summary-box">
+      <h2>Data Summary</h2>
+      <p>Highest Expense: <span id="highest">0</span>TZS</p>
+      <p>Average Spending: <span id="average">0</span>TZS</p>
+
+      <h3>Expense List:</h3>
+      <ul id="expenseList"></ul>
+    </div>
+    <script>
+      let currentBalance = 0;
+      let initialTotalBudget = 0;
+      let expensesArray = [];
+
+      function calculateInitialBudget() {
+        let budget = Number(document.getElementById("budget").value);
+        let flight = Number(document.getElementById("flight").value);
+        let hotel = Number(document.getElementById("hotel").value);
+        let dinner = Number(document.getElementById("dinner").value);
+
+        initialTotalBudget = budget;
+        currentBalance = budget - (flight + hotel + dinner);
+
+        updateUI();
+      }
+
+      function addNewExpense() {
+        let expenseInput = document.getElementById("newExpense");
+        let amount = Number(expenseInput.value);
+
+        if (amount <= 0) return;
+        if (amount > initialTotalBudget * 0.2) {
+          alert("Major Expense!");
+        }
+        expensesArray.push(amount);
+
+        currentBalance -= amount;
+        updateUI();
+        processSummary();
+        renderExpenseList();
+        expenseInput.value = "";
+      }
+
+      function updateUI() {
+        let display = document.getElementById("balancedisplay");
+        if (display) {
+          display.innerText = "Balance:" + currentBalance + "TZS";
+          display.style.color = currentBalance < 0 ? "red" : "black";
+        }
+      }
+
+      function processSummary() {
+        let highest = 0;
+        let totalSpent = 0;
+
+        for (let i = 0; i < expensesArray.length; i++) {
+          totalSpent += expensesArray[i];
+
+          if (expensesArray[i] > highest) {
+            highest = expensesArray[i];
+          }
+        }
+        let avg =
+          expensesArray.length > 0 ? totalSpent / expensesArray.length : 0;
+
+        document.getElementById("highest").innerText = highest;
+        document.getElementById("average").innerText = avg.toFixed(2);
+      }
+
+      function renderExpenseList() {
+        let ul = document.getElementById("expenseList");
+        ul.innerHTML = "";
+
+        for (let i = 0; i < expensesArray.length; i++) {
+          let li = document.createElement("li");
+          li.innerText = "Expense: " + expensesArray[i] + "TZS";
+          ul.appendChild(li);
+        }
+      }
+    </script>
+  </body>
+</html>
