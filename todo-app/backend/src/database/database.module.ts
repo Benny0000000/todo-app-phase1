@@ -1,4 +1,4 @@
-// backend/src/modules/database/database.module.ts
+
 import { Module, Global } from '@nestjs/common';
 import { Pool } from 'pg';
 
@@ -17,7 +17,7 @@ import { Pool } from 'pg';
             database: process.env.DB_DATABASE || 'todo_app',
           });
 
-          // Test connection
+          
           pool.query('SELECT NOW()', (err) => {
             if (err) {
               console.error('❌ Database connection failed:', err.message);

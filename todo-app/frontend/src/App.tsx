@@ -1,4 +1,4 @@
-// src/App.tsx - CLEAN VERSION
+
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -101,7 +101,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Header */}
+        
         <header className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
@@ -127,7 +127,7 @@ function App() {
           </button>
         </header>
 
-        {/* Stats */}
+       
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
             <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -157,12 +157,12 @@ function App() {
           </div>
         </div>
 
-        {/* Add Todo Form */}
+       
         <div className="mb-8">
           <TodoForm onSubmit={handleAddTodo} isLoading={loading} />
         </div>
 
-        {/* Todo List */}
+       
         <TaskList
           todos={todos}
           onToggleComplete={handleToggleComplete}

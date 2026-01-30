@@ -69,7 +69,7 @@ const TaskList: React.FC<TaskListProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Pending Todos */}
+     
       {pendingTodos.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">
@@ -91,7 +91,7 @@ const TaskList: React.FC<TaskListProps> = ({
         </div>
       )}
 
-      {/* Completed Todos */}
+      
       {completedTodos.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">

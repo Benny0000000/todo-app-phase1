@@ -7,5 +7,5 @@ A complete Full-stack Todo application built with modern technologies to ensure 
 
 | **Frontend** | React, TypeScript, Vite, Tailwind CSS, Lucide Icons |
 | **Backend** | NestJS (Node.js Framework), TypeScript |
-| **Database** | PostgreSQL / MySQL |
+| **Database** |PostgreSQL |
 | **Version Control** | Git & GitHub |

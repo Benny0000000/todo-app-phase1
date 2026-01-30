@@ -12,12 +12,12 @@ export class ZodValidationPipe implements PipeTransform {
 
   transform(value: unknown, metadata: ArgumentMetadata) {
     try {
-      // Validate the value against the Zod schema
+    
       const parsedValue = this.schema.parse(value);
       return parsedValue;
     } catch (error) {
       if (error instanceof ZodError) {
-        // Format Zod errors in a readable way
+       
         const formattedErrors = error.errors.map((err) => ({
           field: err.path.join('.'),
           message: err.message,

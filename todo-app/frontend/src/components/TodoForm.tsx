@@ -1,40 +1,46 @@
-import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
+import React, { useState } from "react";
+import { Plus } from "lucide-react";
 
 interface TodoFormProps {
-  onSubmit: (title: string, description?: string) => Promise<{ success: boolean }>;
+  onSubmit: (
+    title: string,
+    description?: string,
+  ) => Promise<{ success: boolean }>;
   isLoading?: boolean;
 }
 
 const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, isLoading = false }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [error, setError] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!title.trim()) {
-      setError('Title is required');
+      setError("Title is required");
       return;
     }
 
     if (title.length > 255) {
-      setError('Title must be less than 255 characters');
+      setError("Title must be less than 255 characters");
       return;
     }
 
-    const result = await onSubmit(title.trim(), description.trim() || undefined);
-    
+    const result = await onSubmit(
+      title.trim(),
+      description.trim() || undefined,
+    );
+
     if (result.success) {
-      setTitle('');
-      setDescription('');
+      setTitle("");
+      setDescription("");
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && e.ctrlKey) {
+    if (e.key === "Enter" && e.ctrlKey) {
       handleSubmit(e);
     }
   };
@@ -50,7 +56,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, isLoading = false }) => {
               onChange={(e) => setTitle(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="What needs to be done?"
-              className="w-full px-3 py-2 text-lg font-medium bg-transparent border-0 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0"
+              className="w-full px-3 py-2 text-lg font-medium bg-gray-950 border-0 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0"
               disabled={isLoading}
               autoFocus
             />
@@ -67,7 +73,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, isLoading = false }) => {
               onChange={(e) => setDescription(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Add a description (optional)"
-              className="w-full px-3 py-2 bg-transparent border-0 text-gray-700 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0 resize-none"
+              className="w-full px-3 py-3 bg-gray-950 border-0 text-gray-400 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0 resize-none"
               rows={2}
               disabled={isLoading}
             />
@@ -82,9 +88,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ onSubmit, isLoading = false }) => {
               disabled={isLoading || !title.trim()}
               className={`
                 flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors
-                ${title.trim() && !isLoading
-                  ? 'bg-blue-600 text-white hover:bg-blue-700'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
+                ${
+                  title.trim() && !isLoading
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
                 }
               `}
             >
